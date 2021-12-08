@@ -1,0 +1,8 @@
+FROM /Layerfile
+
+SKIP REMAINING IF LAYERCI_BRANCH=main
+
+SECRET ENV livechat_app
+RUN echo "$livechat_app" | base64 -d > ~/myfile && chmod 600 livechat_app
+
+RUN ssh -i livechat_app -o StrictHostKeyChecking=no root@51.222.87.188 "rm -rf /tmp/build 2>/dev/null; git clone https://github.com/poruvo/livechat-poruvo-ex /tmp/build
